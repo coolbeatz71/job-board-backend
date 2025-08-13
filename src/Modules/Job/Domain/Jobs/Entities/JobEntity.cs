@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using Core.Domain;
 using Job.Domain.Jobs.Enums;
 using Job.Domain.Jobs.Events;
@@ -17,12 +18,14 @@ public class JobEntity: Aggregate<Guid>
     /// Gets the title of the job position.
     /// </summary>
     /// <value>The job title, such as "Senior Software Developer" or "Marketing Manager".</value>
+    [MaxLength(100)]
     public string Title { get; private set; } = null!;
     
     /// <summary>
     /// Gets the detailed description of the job responsibilities and role.
     /// </summary>
     /// <value>A comprehensive description outlining the job duties, expectations, and role overview.</value>
+    [MaxLength(300)]
     public string Description { get; private set; } = null!;
 
     /// <summary>
@@ -32,24 +35,28 @@ public class JobEntity: Aggregate<Guid>
     /// Optional requirements such as education, experience, skills, and certifications.
     /// Can be null if no specific requirements are defined.
     /// </value>
-    public string? Requirements { get; private set; } = null;
+    [MaxLength(300)]
+    public string? Requirements { get; private set; }
 
     /// <summary>
     /// Gets the name of the company offering the job position.
     /// </summary>
     /// <value>The official company name, such as "Microsoft Corporation" or "Acme Inc."</value>
+    [MaxLength(100)]
     public string CompanyName { get; private set; } = null!;
 
     /// <summary>
     /// Gets the company's official website URL.
     /// </summary>
     /// <value>The full URL to the company's website, including the protocol (e.g., "https://www.company.com").</value>
+    [MaxLength(50)]
     public string CompanyWebsite { get; private set; } = null!;
 
     /// <summary>
     /// Gets the geographical location where the job is based.
     /// </summary>
     /// <value>The job location, which can be a city, state/region, country, or "Remote" for remote positions.</value>
+    [MaxLength(50)]
     public string Location { get; private set; } = null!;
 
     /// <summary>
