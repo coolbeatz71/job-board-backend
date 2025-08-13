@@ -28,7 +28,9 @@ public class JobConfiguration: IEntityTypeConfiguration<JobEntity>
         builder.Property(j => j.Location).HasMaxLength(50).IsRequired();
         
         builder.Property(j => j.WorkMode).HasConversion<string>().IsRequired();
-        builder.Property(j => j.Status).HasConversion<string>().HasDefaultValue(JobStatus.Active);
+        builder.Property(j => j.Status).HasConversion<string>()
+            .HasDefaultValue(JobStatus.Active)
+            .HasSentinel(JobStatus.Active);
         builder.Property(j => j.JobType).HasConversion<string>().IsRequired();
         
         builder.Property(j => j.ApplicationDeadline)
