@@ -1,7 +1,7 @@
 using Core.Application.Configurations;
 using Core.Infrastructure.Extensions;
 using Core.Infrastructure.Interceptors;
-using Core.Infrastructure.Seed;
+using JobApplication.Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;

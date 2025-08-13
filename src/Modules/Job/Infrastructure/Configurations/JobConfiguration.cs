@@ -26,15 +26,13 @@ public class JobConfiguration: IEntityTypeConfiguration<JobEntity>
         builder.Property(j => j.CompanyName).HasMaxLength(100).IsRequired();
         builder.Property(j => j.CompanyWebsite).HasMaxLength(50).IsRequired();
         builder.Property(j => j.Location).HasMaxLength(50).IsRequired();
-        
         builder.Property(j => j.WorkMode).HasConversion<string>().IsRequired();
         builder.Property(j => j.Status).HasConversion<string>()
             .HasDefaultValue(JobStatus.Active)
             .HasSentinel(JobStatus.Active);
         builder.Property(j => j.JobType).HasConversion<string>().IsRequired();
         
-        builder.Property(j => j.ApplicationDeadline)
-            .HasColumnType("timestamptz");
+        builder.Property(j => j.ApplicationDeadline).HasColumnType("timestamptz");
 
         // Add check constraint to ensure ApplicationDeadline is null or in the future
         builder.ToTable(t => t.HasCheckConstraint(
