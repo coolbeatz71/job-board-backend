@@ -23,15 +23,15 @@ public class InitialData
         Enumerable.Range(1, 5).Select(_ => JobEntity.Create(
             id: Guid.NewGuid(),
             title: Faker.Name.JobTitle(),
-            description: Faker.Lorem.Paragraph(5),
-            requirements: Faker.Lorem.Paragraph(2),
+            description: Faker.Lorem.Paragraph(2),
+            requirements: Faker.Lorem.Paragraph(1),
             companyName: Faker.Company.CompanyName(),
             companyWebsite: Faker.Internet.Url(),
             location: Faker.Address.City(),
             workMode: GetRandomValue<WorkMode>(),
             status: GetRandomValue<JobStatus>(),
             jobType: GetRandomValue<JobType>(),
-            applicationDeadline: Faker.Date.Soon(45)
+            applicationDeadline: Faker.Date.Soon(45).ToUniversalTime()
         ));
     
     /// <summary>
