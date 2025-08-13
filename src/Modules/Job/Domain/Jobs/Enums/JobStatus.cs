@@ -5,7 +5,6 @@ namespace Job.Domain.Jobs.Enums;
 /// </summary>
 public enum JobStatus
 {
-    Draft,
     Active,
     Paused,
     Closed,
