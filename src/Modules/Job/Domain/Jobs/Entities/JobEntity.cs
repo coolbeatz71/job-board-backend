@@ -1,5 +1,6 @@
 using Core.Domain;
 using Job.Domain.Jobs.Enums;
+using Job.Domain.Jobs.Events;
 
 namespace Job.Domain.Jobs.Entities;
 
