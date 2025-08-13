@@ -8,8 +8,25 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Job;
 
+/// <summary>
+/// Provides extension methods to register and configure the Job module's services and middleware.
+/// </summary>
 public static class JobModule
 {
+    /// <summary>
+    /// Adds the Job module's services to the dependency injection container.
+    /// </summary>
+    /// <param name="services">The service collection to register services into.</param>
+    /// <param name="configuration">The application configuration instance.</param>
+    /// <returns>The updated <see cref="IServiceCollection"/> for chaining.</returns>
+    /// <remarks>
+    /// Registers MediatR handlers, database context with interceptors, and a data seeder.
+    /// </remarks>
+    /// <example>
+    /// <code>
+    /// builder.Services.AddJobModule(builder.Configuration);
+    /// </code>
+    /// </example>
     public static IServiceCollection AddJobModule(this IServiceCollection services, IConfiguration configuration)
     {
         // Add services to the container.
