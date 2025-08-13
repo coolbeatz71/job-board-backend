@@ -59,14 +59,14 @@ public class JobEntity: Aggregate<Guid>
     /// The work mode such as Remote, OnSite, or Hybrid as defined by the <see cref="WorkMode"/> enumeration.
     /// </value>
     public WorkMode WorkMode { get; private set; }
-    
+
     /// <summary>
     /// Gets the current status of the job listing.
     /// </summary>
     /// <value>
     /// The job status such as Active, Closed, or Draft as defined by the <see cref="JobStatus"/> enumeration.
     /// </value>
-    public JobStatus Status { get; private set; }
+    public JobStatus Status { get; private set; } = JobStatus.Active;
 
     /// <summary>
     /// Gets the type of employment offered.
