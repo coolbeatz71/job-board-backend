@@ -8,6 +8,7 @@
 
     <ItemGroup>
       <Folder Include="Application\" />
+      <Folder Include="Domain\Jobs\" />
       <Folder Include="Infrastructure\" />
     </ItemGroup>
 
