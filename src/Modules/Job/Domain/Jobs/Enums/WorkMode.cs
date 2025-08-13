@@ -1,4 +1,4 @@
-namespace Job.Domain.Enums;
+namespace Job.Domain.Jobs.Enums;
 
 public enum WorkMode
 {
