@@ -1,7 +1,10 @@
 using Core.Application.Configurations;
+using Core.Infrastructure.Extensions;
 using Core.Infrastructure.Interceptors;
 using Core.Infrastructure.Seed;
 using Job.Infrastructure;
+using Job.Infrastructure.Seed;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
@@ -56,6 +59,31 @@ public static class JobModule
         services.AddScoped<IDataSeeder, JobDataSeeder>();
 
         return services;
+    }
+    
+    /// <summary>
+    /// Configures the Job module's middleware in the application pipeline.
+    /// </summary>
+    /// <param name="app">The application builder.</param>
+    /// <returns>The updated <see cref="IApplicationBuilder"/> for chaining.</returns>
+    /// <remarks>
+    /// Applies pending EF Core migrations and executes the data seeder.
+    /// </remarks>
+    /// <example>
+    /// <code>
+    /// app.UseJobModule();
+    /// </code>
+    /// </example>
+    public static IApplicationBuilder UseJobModule(this IApplicationBuilder app)
+    {
+        // Configure Http request pipeline.
+        // Use Api endpoint services.
+        // Use application UseCase services.
+        // Use DataSource - Infrastructure services.
+        
+        app.UseMigration<JobDbContext>();
+        app.UseSeed();
 
+        return app;
     }
 }
