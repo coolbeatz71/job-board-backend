@@ -11,7 +11,7 @@ namespace Job.Domain.Jobs.Events.Handlers;
 /// </remarks>
 public class JobUpdatedEventHandler(ILogger<JobUpdatedEventHandler> logger)
     : INotificationHandler<JobUpdatedEvent>
-    
+
 {
     /// <summary>
     /// Handles the <see cref="JobUpdatedEvent"/> by logging information about the updated job.
