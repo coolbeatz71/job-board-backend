@@ -1,4 +1,5 @@
 using Core.Domain;
+using JobApplication.Domain.JobApplications.Entities;
 
 namespace JobApplication.Domain.JobApplications.Events;
 
@@ -16,4 +17,4 @@ namespace JobApplication.Domain.JobApplications.Events;
 /// var domainEvent = new JobApplicationCreatedEvent(application);
 /// </code>
 /// </example>
-public record JobApplicationCreatedEvent(JobApplicationEntity jobApplicationEntity): IDomainEvent;
+public record JobApplicationCreatedEvent(JobApplicationEntity JobApplicationEntity): IDomainEvent;
