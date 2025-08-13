@@ -1,6 +1,7 @@
 using Core.Application.Configurations;
 using Core.Infrastructure.Interceptors;
 using Core.Infrastructure.Seed;
+using Job.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
