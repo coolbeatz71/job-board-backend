@@ -9,7 +9,7 @@ public record Role
 
     public Role(UserRole value)
     {
-        if (!Enum.IsDefined(value)) throw new ArgumentException($"Invalid role: {value}");
+        if (!Enum.IsDefined(value)) throw new ArgumentException($"Invalid user role: {value}");
         
         Value = value;
     }
@@ -18,7 +18,7 @@ public record Role
     {
         if (!Enum.TryParse<UserRole>(value, true, out var parsed) || !Enum.IsDefined(parsed))
         {
-            throw new ArgumentException($"Invalid role: {value}");
+            throw new ArgumentException($"Invalid user role: {value}");
         }
 
         Value = parsed;
