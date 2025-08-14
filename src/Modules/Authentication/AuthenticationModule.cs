@@ -1,5 +1,8 @@
 using System.Text;
+using Authentication.Application.Authorization;
+using Authentication.Application.Authorization.Handlers;
 using Authentication.Application.Services;
+using Authentication.Domain.Users.Enums;
 using Authentication.Infrastructure;
 using Authentication.Infrastructure.Seed;
 using Core.Application.Configurations;
@@ -7,6 +10,7 @@ using Core.Infrastructure.Extensions;
 using Core.Infrastructure.Interceptors;
 using Core.Infrastructure.Seed;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
@@ -63,10 +67,10 @@ public static class AuthenticationModule
         services.AddScoped<IJwtService, JwtService>();
         services.AddScoped<IPasswordService, PasswordService>();
         services.AddScoped<IDataSeeder, AuthenticationDataSeeder>();
+        services.AddScoped<IAuthorizationHandler, RoleRequirementHandler>();
         
         var (secret, issuer, audience, expiration) = AppEnvironment.Jwt();
-        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            .AddJwtBearer(options =>
+        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
             {
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
@@ -76,12 +80,34 @@ public static class AuthenticationModule
                     ValidateIssuerSigningKey = true,
                     ValidIssuer = issuer,
                     ValidAudience = audience,
-                    IssuerSigningKey = new SymmetricSecurityKey(
-                        Encoding.UTF8.GetBytes(secret!)),
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret!)),
                     ClockSkew = TimeSpan.Zero
                 };
             });
+        
+        var policyRoleMap = new Dictionary<string, string[]>
+        {
+            { AuthorizationPolicies.AdminOnly, [nameof(UserRole.Admin)] },
+            { AuthorizationPolicies.EmployerOnly, [nameof(UserRole.Employer)] },
+            { AuthorizationPolicies.JobSeekerOnly, [nameof(UserRole.JobSeeker)] },
+            { AuthorizationPolicies.AdminOrEmployer, [nameof(UserRole.Admin), nameof(UserRole.Employer)] },
+            { 
+                AuthorizationPolicies.AllRoles, 
+                [
+                    nameof(UserRole.Admin), nameof(UserRole.Employer), nameof(UserRole.JobSeeker)
+                ]
+            }
+        };
 
+        var authBuilder = services.AddAuthorizationBuilder();
+
+        foreach (var (policyName, roles) in policyRoleMap)
+        {
+            authBuilder.AddPolicy(policyName, policy => 
+                policy.Requirements.Add(new RoleRequirement(roles))
+            );
+        }
+        
         return services;
     }
     
