@@ -1,4 +1,5 @@
 using System.Reflection;
+using Authentication.Domain.Users.Entities;
 using Job.Domain.Jobs.Entities;
 using JobApplication.Domain.JobApplications.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -20,10 +21,10 @@ public class JobApplicationDbContext(DbContextOptions<JobApplicationDbContext> o
     /// </summary>
     public DbSet<JobEntity> Jobs => Set<JobEntity>();
     
-    // /// <summary>
-    // /// Gets the <see cref="DbSet{TEntity}"/> for <see cref="UserEntity"/>.
-    // /// </summary>
-    // public DbSet<UserEntity> Users => Set<UserEntity>();
+    /// <summary>
+    /// Gets the <see cref="DbSet{TEntity}"/> for <see cref="UserEntity"/>.
+    /// </summary>
+    public DbSet<UserEntity> Users => Set<UserEntity>();
     
     /// <summary>
     /// Configures the model for the context using Fluent API.

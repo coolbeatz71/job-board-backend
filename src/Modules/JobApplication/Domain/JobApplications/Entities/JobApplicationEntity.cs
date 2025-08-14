@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using Core.Domain;
 using JobApplication.Domain.JobApplications.Enums;
 using JobApplication.Domain.JobApplications.Events;
@@ -41,14 +42,16 @@ public class JobApplicationEntity : Aggregate<Guid>
     /// <value>
     /// The optional cover letter text. Can be null if no cover letter was provided.
     /// </value>
-    public string? CoverLetter { get; private set; } = null;
+    [MaxLength(2000)]
+    public string? CoverLetter { get; private set; }
 
     /// <summary>
-    /// Gets the URL of the applicant's resume or CV.
+    /// Gets the URL of the applicant's résumé or CV.
     /// </summary>
     /// <value>
-    /// A non-null string containing a valid URL to the applicant's resume.
+    /// A non-null string containing a valid URL to the applicant's résumé.
     /// </value>
+    [MaxLength(500)]
     public string ResumeUrl { get; private set; } = null!;
 
     /// <summary>
@@ -57,7 +60,8 @@ public class JobApplicationEntity : Aggregate<Guid>
     /// <value>
     /// Optional notes that may be added by recruiters or administrators.
     /// </value>
-    public string? Notes { get; private set; } = null;
+    [MaxLength(1000)]
+    public string? Notes { get; private set; }
 
     /// <summary>
     /// Gets the date and time when the application was submitted.
@@ -76,7 +80,7 @@ public class JobApplicationEntity : Aggregate<Guid>
     /// <param name="applicantId">The identifier of the applicant. Cannot be empty.</param>
     /// <param name="status">The initial status of the application.</param>
     /// <param name="coverLetter">The optional cover letter text.</param>
-    /// <param name="resumeUrl">The URL of the applicant's resume. Cannot be null.</param>
+    /// <param name="resumeUrl">The URL of the applicant's résumé. Cannot be null.</param>
     /// <param name="notes">Optional recruiter or admin notes.</param>
     /// <param name="applicationDate">The application submission date. Cannot be in the future.</param>
     /// <returns>A new instance of <see cref="JobApplicationEntity"/>.</returns>

@@ -19,7 +19,7 @@ public class JobConfiguration: IEntityTypeConfiguration<JobEntity>
     /// </remarks>
     public void Configure(EntityTypeBuilder<JobEntity> builder)
     {
-        builder.HasKey(p => p.Id);
+        builder.HasKey(j => j.Id);
         builder.Property(j => j.Title).HasMaxLength(100).IsRequired();
         builder.Property(j => j.Description).HasMaxLength(300).IsRequired();
         builder.Property(j => j.Requirements).HasMaxLength(300);

@@ -1,4 +1,5 @@
 
+using Authentication.Domain.Users.Entities;
 using Job.Domain.Jobs.Entities;
 using JobApplication.Domain.JobApplications.Entities;
 using JobApplication.Domain.JobApplications.Enums;
@@ -27,10 +28,10 @@ public class JobApplicationConfiguration : IEntityTypeConfiguration<JobApplicati
                .WithMany()
                .HasForeignKey(ja => ja.JobId)
                .OnDelete(DeleteBehavior.Cascade);
-        // builder.HasOne<UserEntity>()
-        //        .WithMany()
-        //        .HasForeignKey(ja => ja.ApplicantId)
-        //        .OnDelete(DeleteBehavior.Cascade);
+        builder.HasOne<UserEntity>()
+               .WithMany()
+               .HasForeignKey(ja => ja.ApplicantId)
+               .OnDelete(DeleteBehavior.Cascade);
         builder.Property(ja => ja.Status)
                .HasConversion<string>()
                .HasDefaultValue(ApplicationStatus.Submitted)
