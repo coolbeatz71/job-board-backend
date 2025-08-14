@@ -16,4 +16,9 @@
       <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.2.1" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Application\UseCases\Login\" />
+      <Folder Include="Application\UseCases\Register\" />
+    </ItemGroup>
+
 </Project>
