@@ -51,4 +51,14 @@ public class AppEnvironment
         var defaultPassword = Environment.GetEnvironmentVariable("DEFAULT_USER_PASSWORD");
         return defaultPassword;
     }
+
+    public static (string? secret, string? issuer, string? audience, string? expiration) Jwt()
+    {
+        var  secret = Environment.GetEnvironmentVariable("JWT_SECRET");
+        var issuer = Environment.GetEnvironmentVariable("JWT_ISSUER");
+        var audience = Environment.GetEnvironmentVariable("JWT_AUDIENCE");
+        var expiration = Environment.GetEnvironmentVariable("JWT_EXPIRATION");
+        
+        return (secret, issuer, audience, expiration);
+    }
 }
