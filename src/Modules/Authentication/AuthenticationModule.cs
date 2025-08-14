@@ -1,3 +1,4 @@
+using System.Text;
 using Authentication.Application.Services;
 using Authentication.Infrastructure;
 using Authentication.Infrastructure.Seed;
@@ -5,11 +6,13 @@ using Core.Application.Configurations;
 using Core.Infrastructure.Extensions;
 using Core.Infrastructure.Interceptors;
 using Core.Infrastructure.Seed;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Authentication;
 
@@ -57,8 +60,27 @@ public static class AuthenticationModule
         });
 
         // Register data seeder for initial data population.
+        services.AddScoped<IJwtService, JwtService>();
         services.AddScoped<IPasswordService, PasswordService>();
         services.AddScoped<IDataSeeder, AuthenticationDataSeeder>();
+        
+        var (secret, issuer, audience, expiration) = AppEnvironment.Jwt();
+        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = issuer,
+                    ValidAudience = audience,
+                    IssuerSigningKey = new SymmetricSecurityKey(
+                        Encoding.UTF8.GetBytes(secret!)),
+                    ClockSkew = TimeSpan.Zero
+                };
+            });
 
         return services;
     }
