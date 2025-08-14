@@ -1,4 +1,6 @@
+using Authentication.Application.Services;
 using Authentication.Infrastructure;
+using Authentication.Infrastructure.Seed;
 using Core.Application.Configurations;
 using Core.Infrastructure.Extensions;
 using Core.Infrastructure.Interceptors;
@@ -55,6 +57,7 @@ public static class AuthenticationModule
         });
 
         // Register data seeder for initial data population.
+        services.AddScoped<IPasswordService, PasswordService>();
         services.AddScoped<IDataSeeder, AuthenticationDataSeeder>();
 
         return services;

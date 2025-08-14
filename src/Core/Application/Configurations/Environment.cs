@@ -34,4 +34,21 @@ public class AppEnvironment
 
         return (port, db, user, pass);
     }
+    
+    /// <summary>
+    /// Retrieves the default password used for seeding or initializing user accounts.
+    /// </summary>
+    /// <remarks>
+    /// The value is fetched from the <c>DEFAULT_USER_PASSWORD</c> environment variable.
+    /// This is typically set in development or deployment environments to provide
+    /// a consistent default password for newly created accounts during application setup.
+    /// </remarks>
+    /// <returns>
+    /// The default password string, or <c>null</c> if the environment variable is not set.
+    /// </returns>
+    public static string? DefaultPassword()
+    {
+        var defaultPassword = Environment.GetEnvironmentVariable("DEFAULT_USER_PASSWORD");
+        return defaultPassword;
+    }
 }
