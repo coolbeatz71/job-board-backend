@@ -35,9 +35,10 @@ public class LoginHandler(
         var email = new Email(command.Email);
         
         var user = await dbContext.Users
-            .FirstOrDefaultAsync(x => x.Email.Equals(
-                email, StringComparison.InvariantCultureIgnoreCase
-            ), cancellationToken);
+            .FirstOrDefaultAsync(
+                x => EF.Functions.ILike(x.Email, email),
+                cancellationToken
+            );
 
         if (user == null) throw new BadRequestException("Invalid email or password.");
 
