@@ -6,4 +6,5 @@ public class RouteGroup
     public static string Auth => $"{Version}/auth";
     
     public static string User => $"{Version}/users";
+    public static string Job => $"{Version}/jobs";
 }

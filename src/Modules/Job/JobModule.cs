@@ -2,7 +2,9 @@ using Core.Application.Configurations;
 using Core.Infrastructure.Extensions;
 using Core.Infrastructure.Interceptors;
 using Core.Infrastructure.Seed;
+using Job.Domain.Jobs.Repository;
 using Job.Infrastructure;
+using Job.Infrastructure.Repository;
 using Job.Infrastructure.Seed;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
@@ -57,6 +59,9 @@ public static class JobModule
 
         // Register data seeder for initial data population.
         services.AddScoped<IDataSeeder, JobDataSeeder>();
+
+        // Register repositories
+        services.AddScoped<IJobRepository, JobRepository>();
 
         return services;
     }

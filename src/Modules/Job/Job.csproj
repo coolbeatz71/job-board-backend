@@ -6,13 +6,10 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
-    <ItemGroup>
-      <Folder Include="Application\" />
-      <Folder Include="Infrastructure\Migrations\" />
-    </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\..\Core\Core.csproj" />
+      <ProjectReference Include="..\Authentication\Authentication.csproj" />
     </ItemGroup>
 
 </Project>
