@@ -41,7 +41,6 @@ public class RegisterEndpoint: ICarterModule
         group.MapPost("register", async (RegisterRequest request, ISender sender) =>
         {
             // Send the command to register the user
-            // var userRole = new Role(request.Role);
             var command = new RegisterCommand(request.Email, request.Password, request.Role);
             var result = await sender.Send(command);
             

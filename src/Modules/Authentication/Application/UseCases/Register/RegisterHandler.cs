@@ -23,7 +23,6 @@ public class RegisterHandler(
     /// <param name="cancellationToken">Token to cancel the operation.</param>
     /// <returns>A <see cref="RegisterResult"/> containing authentication information.</returns>
     /// <exception cref="BadRequestException">Thrown when email already exists or validation fails.</exception>
-
     public async Task<RegisterResult> Handle(RegisterCommand command, CancellationToken cancellationToken)
     {
         // normalize email using value object
@@ -33,10 +32,7 @@ public class RegisterHandler(
         var existingUser = await dbContext.Users
             .FirstOrDefaultAsync(x => x.Email == email.Value, cancellationToken);
 
-        if (existingUser != null)
-        {
-            throw new BadRequestException("User with this email already exists.");
-        }
+        if (existingUser != null) throw new BadRequestException("User with this email already exists.");
         
         var passwordHash = passwordService.Hash(command.Password);
         
@@ -57,10 +53,8 @@ public class RegisterHandler(
         );
 
         var userDto = user.Adapt<UserResponseDto>();
-        
         var authResult = new AuthenticationResult(userDto, token);
 
         return new RegisterResult(authResult);
     }
-    
 }
