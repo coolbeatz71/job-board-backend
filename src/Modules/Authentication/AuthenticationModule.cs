@@ -1,4 +1,5 @@
 using System.Text;
+using System.Text.Json;
 using Authentication.Application.Authorization;
 using Authentication.Application.Authorization.Handlers;
 using Authentication.Application.Services;
@@ -12,6 +13,7 @@ using Core.Infrastructure.Seed;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
@@ -82,6 +84,38 @@ public static class AuthenticationModule
                     ValidAudience = audience,
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret!)),
                     ClockSkew = TimeSpan.Zero
+                };
+
+                options.Events = new JwtBearerEvents
+                {
+                    OnChallenge = context =>
+                    {
+                        context.HandleResponse();
+                        context.Response.StatusCode = 401;
+                        context.Response.ContentType = "application/json";
+                        
+                        var response = new
+                        {
+                            error = "Unauthorized",
+                            message = "Authentication required. Please provide a valid JWT token."
+                        };
+                        
+                        return context.Response.WriteAsync(JsonSerializer.Serialize(response));
+                    },
+                    
+                    OnForbidden = context =>
+                    {
+                        context.Response.StatusCode = 403;
+                        context.Response.ContentType = "application/json";
+                        
+                        var response = new
+                        {
+                            error = "Forbidden",
+                            message = "Access denied. You don't have permission to access this resource."
+                        };
+                        
+                        return context.Response.WriteAsync(JsonSerializer.Serialize(response));
+                    }
                 };
             });
         
