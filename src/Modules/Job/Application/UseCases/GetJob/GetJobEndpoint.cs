@@ -32,7 +32,7 @@ public class GetJobEndpoint : ICarterModule
     {
         var group = app.MapGroup(RouteGroup.Job).WithTags("Jobs");
 
-        group.MapGet("{id}", async (string id, ISender sender) =>
+        group.MapGet("{id:guid}", async (string id, ISender sender) =>
         {
             // Send the query to retrieve the job
             var result = await sender.Send(new GetJobQuery(id));

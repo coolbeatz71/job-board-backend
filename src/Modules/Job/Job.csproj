@@ -11,7 +11,5 @@
       <ProjectReference Include="..\..\Core\Core.csproj" />
       <ProjectReference Include="..\Authentication\Authentication.csproj" />
     </ItemGroup>
-
-
-
+    
 </Project>
