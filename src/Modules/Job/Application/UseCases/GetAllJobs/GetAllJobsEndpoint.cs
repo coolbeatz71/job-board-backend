@@ -34,13 +34,13 @@ public class GetAllJobsEndpoint : ICarterModule
         var group = app.MapGroup(RouteGroup.Job).WithTags("Jobs");
 
         group.MapGet("", async (
+            ISender sender,
             int pageIndex = 0,
             int pageSize = 10,
             string? status = null,
             string? jobType = null,
             string? workMode = null,
-            string? search = null,
-            ISender sender) =>
+            string? search = null) =>
         {
             // Create pagination request
             var paginatedRequest = new PaginatedRequest(pageIndex, pageSize);
