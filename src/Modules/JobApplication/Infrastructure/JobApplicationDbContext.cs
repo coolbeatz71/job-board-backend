@@ -16,15 +16,7 @@ public class JobApplicationDbContext(DbContextOptions<JobApplicationDbContext> o
     /// </summary>
     public DbSet<JobApplicationEntity> JobApplications => Set<JobApplicationEntity>();
     
-    /// <summary>
-    /// Gets the <see cref="DbSet{TEntity}"/> for <see cref="JobEntity"/>.
-    /// </summary>
-    public DbSet<JobEntity> Jobs => Set<JobEntity>();
     
-    /// <summary>
-    /// Gets the <see cref="DbSet{TEntity}"/> for <see cref="UserEntity"/>.
-    /// </summary>
-    public DbSet<UserEntity> Users => Set<UserEntity>();
     
     /// <summary>
     /// Configures the model for the context using Fluent API.

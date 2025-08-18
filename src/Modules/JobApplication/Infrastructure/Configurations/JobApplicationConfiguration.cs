@@ -24,14 +24,10 @@ public class JobApplicationConfiguration : IEntityTypeConfiguration<JobApplicati
     public void Configure(EntityTypeBuilder<JobApplicationEntity> builder)
     {
         builder.HasKey(ja => ja.Id);
-        builder.HasOne<JobEntity>()
-               .WithMany()
-               .HasForeignKey(ja => ja.JobId)
-               .OnDelete(DeleteBehavior.Cascade);
-        builder.HasOne<UserEntity>()
-               .WithMany()
-               .HasForeignKey(ja => ja.ApplicantId)
-               .OnDelete(DeleteBehavior.Cascade);
+        // JobId references jobs in a different schema, so no FK constraint
+        builder.Property(ja => ja.JobId).IsRequired();
+        // ApplicantId references users in a different schema, so no FK constraint
+        builder.Property(ja => ja.ApplicantId).IsRequired();
         builder.Property(ja => ja.Status)
                .HasConversion<string>()
                .HasDefaultValue(ApplicationStatus.Submitted)

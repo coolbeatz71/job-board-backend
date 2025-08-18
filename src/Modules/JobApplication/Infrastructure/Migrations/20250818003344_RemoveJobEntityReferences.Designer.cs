@@ -3,6 +3,7 @@ using System;
 using JobApplication.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace JobApplication.Infrastructure.Migrations
 {
     [DbContext(typeof(JobApplicationDbContext))]
-    partial class JobApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250818003344_RemoveJobEntityReferences")]
+    partial class RemoveJobEntityReferences
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -22,6 +25,49 @@ namespace JobApplication.Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+
+            modelBuilder.Entity("Authentication.Domain.Users.Entities.UserEntity", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text")
+                        .HasColumnName("created_by");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("email");
+
+                    b.Property<string>("PasswordHash")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("password_hash");
+
+                    b.Property<int>("Role")
+                        .HasColumnType("integer")
+                        .HasColumnName("role");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("updated_at");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("text")
+                        .HasColumnName("updated_by");
+
+                    b.HasKey("Id")
+                        .HasName("pk_users");
+
+                    b.ToTable("users", "application");
+                });
 
             modelBuilder.Entity("JobApplication.Domain.JobApplications.Entities.JobApplicationEntity", b =>
                 {
@@ -84,6 +130,9 @@ namespace JobApplication.Infrastructure.Migrations
                     b.HasKey("Id")
                         .HasName("pk_job_applications");
 
+                    b.HasIndex("ApplicantId")
+                        .HasDatabaseName("ix_job_applications_applicant_id");
+
                     b.HasIndex("JobId", "ApplicantId")
                         .IsUnique()
                         .HasDatabaseName("UX_JobApplication_JobId_ApplicantId");
@@ -92,6 +141,16 @@ namespace JobApplication.Infrastructure.Migrations
                         {
                             t.HasCheckConstraint("CK_JobApplication_ApplicationDate_NotInFuture", "(application_date IS NULL OR application_date <= NOW())");
                         });
+                });
+
+            modelBuilder.Entity("JobApplication.Domain.JobApplications.Entities.JobApplicationEntity", b =>
+                {
+                    b.HasOne("Authentication.Domain.Users.Entities.UserEntity", null)
+                        .WithMany()
+                        .HasForeignKey("ApplicantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_job_applications_users_applicant_id");
                 });
 #pragma warning restore 612, 618
         }

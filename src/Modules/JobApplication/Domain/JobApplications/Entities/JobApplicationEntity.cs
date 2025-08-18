@@ -34,7 +34,7 @@ public class JobApplicationEntity : Aggregate<Guid>
     /// <see cref="ApplicationStatus.Shortlisted"/>, or <see cref="ApplicationStatus.Rejected"/>.
     /// Defaults to <see cref="ApplicationStatus.Submitted"/>.
     /// </value>
-    public ApplicationStatus Status { get; private set; } = ApplicationStatus.Submitted;
+    public ApplicationStatus? Status { get; private set; } = ApplicationStatus.Submitted;
 
     /// <summary>
     /// Gets the cover letter content submitted by the applicant.
@@ -108,9 +108,9 @@ public class JobApplicationEntity : Aggregate<Guid>
         Guid id,
         Guid jobId,
         Guid applicantId,
-        ApplicationStatus status,
-        string? coverLetter,
+        ApplicationStatus? status,
         string resumeUrl,
+        string? coverLetter,
         string? notes,
         DateTime? applicationDate
     )
