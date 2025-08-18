@@ -18,6 +18,13 @@ public class JobApplicationRepository(JobApplicationDbContext context) : IJobApp
         return jobApplication;
     }
 
+    public async Task<JobApplicationEntity> UpdateAsync(JobApplicationEntity jobApplication, CancellationToken cancellationToken = default)
+    {
+        context.JobApplications.Update(jobApplication);
+        await context.SaveChangesAsync(cancellationToken);
+        return jobApplication;
+    }
+
     public async Task<bool> ExistsAsync(Guid jobId, Guid applicantId, CancellationToken cancellationToken = default)
     {
         return await context.JobApplications
