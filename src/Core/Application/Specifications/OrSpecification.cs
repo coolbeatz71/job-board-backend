@@ -7,6 +7,10 @@ namespace Core.Application.Specifications;
 /// </summary>
 public class OrSpecification<T>(Specification<T> left, Specification<T> right) : Specification<T>
 {
+    /// <summary>
+    /// Combines two specification expressions using logical OR.
+    /// </summary>
+    /// <returns>An expression that evaluates to true when either left or right specification is satisfied.</returns>
     public override Expression<Func<T, bool>> ToExpression()
     {
         var leftExpr = left.ToExpression();
