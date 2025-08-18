@@ -7,6 +7,10 @@ namespace Core.Application.Specifications;
 /// </summary>
 public class AndSpecification<T>(Specification<T> left, Specification<T> right) : Specification<T>
 {
+    /// <summary>
+    /// Combines two specification expressions using logical AND.
+    /// </summary>
+    /// <returns>An expression that evaluates to true when both left and right specifications are satisfied.</returns>
     public override Expression<Func<T, bool>> ToExpression()
     {
         var leftExpr = left.ToExpression();

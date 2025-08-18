@@ -52,6 +52,23 @@ public class AppEnvironment
         return defaultPassword;
     }
 
+    /// <summary>
+    /// Retrieves JWT configuration values from environment variables.
+    /// </summary>
+    /// <remarks>
+    /// Expected environment variables:
+    /// - JWT_SECRET: The secret key used to sign and verify JWT tokens
+    /// - JWT_ISSUER: The issuer claim for JWT tokens
+    /// - JWT_AUDIENCE: The audience claim for JWT tokens  
+    /// - JWT_EXPIRATION: The token expiration time (e.g., "1h", "30m")
+    /// </remarks>
+    /// <returns>
+    /// A tuple containing:
+    /// - <c>secret</c>: The JWT secret key
+    /// - <c>issuer</c>: The JWT issuer
+    /// - <c>audience</c>: The JWT audience
+    /// - <c>expiration</c>: The JWT expiration duration
+    /// </returns>
     public static (string? secret, string? issuer, string? audience, string? expiration) Jwt()
     {
         var  secret = Environment.GetEnvironmentVariable("JWT_SECRET");
