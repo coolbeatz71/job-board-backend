@@ -1,7 +1,9 @@
 using Core.Application.Configurations;
 using Core.Infrastructure.Extensions;
 using Core.Infrastructure.Interceptors;
+using JobApplication.Domain.JobApplications.Repository;
 using JobApplication.Infrastructure;
+using JobApplication.Infrastructure.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
@@ -52,6 +54,9 @@ public static class JobApplicationModule
                 .UseNpgsql(connectionString)
                 .UseSnakeCaseNamingConvention();
         });
+
+        // Register repositories
+        services.AddScoped<IJobApplicationRepository, JobApplicationRepository>();
         
         return services;
     }

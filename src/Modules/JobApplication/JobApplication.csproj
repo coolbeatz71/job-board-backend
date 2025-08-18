@@ -6,9 +6,6 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
-    <ItemGroup>
-      <Folder Include="Application\" />
-    </ItemGroup>
 
     <ItemGroup>
         <ProjectReference Include="..\..\Core\Core.csproj" />
