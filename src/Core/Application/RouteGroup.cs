@@ -24,4 +24,9 @@ public class RouteGroup
     /// Gets the route prefix for job-related endpoints.
     /// </summary>
     public static string Job => $"{Version}/jobs";
+
+    /// <summary>
+    /// Gets the route prefix for job application endpoints.
+    /// </summary>
+    public static string JobApplication => $"{Version}/job-applications";
 }
